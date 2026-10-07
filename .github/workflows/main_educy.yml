@@ -36,7 +36,9 @@ jobs:
       - name: Prepare standalone
         run: |
           cp -r .next/static .next/standalone/.next/
-          if [ -d public ]; then cp -r public .next/standalone/; fi
+          if [ -d public ]; then
+            cp -r public .next/standalone/
+          fi
 
       - name: Upload standalone artifact
         uses: actions/upload-artifact@v4
@@ -49,7 +51,7 @@ jobs:
     needs: build
 
     steps:
-      - name: Download artifact
+      - name: Download standalone artifact
         uses: actions/download-artifact@v4
         with:
           name: nextjs-app
@@ -66,4 +68,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: educy
+          slot-name: Production
           package: .
